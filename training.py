@@ -8,17 +8,21 @@ import os
 
 class ML_Model():
     def __init__(self):
+        """ Constructor for ML_Model class. Opens structured data files and sets up the Machine Learning Model
+        """
         self.actions = np.array(['ayuda', 'clase', 'donde', 'gracias', 'hola', 'necesitar', 'no_entender', 'repetir', 'n-a', 'empty'])
-        self.label_map = {label:num for num, label in enumerate(self.actions)}
+        
+        # Opens structured_data.npy which contains all sequence keypoint data and stores it self.sequences
+        self.sequences = np.load("/Users/codingdan/Documents/University/Semestre 2 2021-2022/Tesina/codigo/ML_model training/structured_data.npy")
+        # Opens labels.npy which contains all sequence label data and stores it in self.labels
+        self.labels = np.load("/Users/codingdan/Documents/University/Semestre 2 2021-2022/Tesina/codigo/ML_model training/labels.npy")
 
-        self.no_sequences = 200
-        self.sequence_length = 30
-        self.DATA_PATH = "/Users/codingdan/Documents/University/Semestre 2 2021-2022/Tesina/codigo/ML_model training/MP_Data"
-
-        self.sequences, self.labels = [],[]
-        self.structure_data()
         # Turn the labels into a categorization list. This turns the labels list into a list of list, where each sub-list contains a set of numbers indicating the category
         self.labels_categorized = to_categorical(self.labels).astype(int) 
+
+        # This splits the sequence and label data into two groups, a training group (which will contain most of the data) and a test group that will consist of 5% of the data
+        self.seqs_train, self.seqs_test, self.labels_train, self.labels_test = train_test_split(self.sequences, self.labels_categorized, test_size=0.05)
+
 
         self.log_dir = os.path.join('Logs')
         #TensorBoard is a web app that comes with tensorflow that allows you to monitor the neural network training
@@ -26,25 +30,6 @@ class ML_Model():
         self.tb_callback = TensorBoard(log_dir=self.log_dir)
 
         self.model = self.build_neural_network_architecture()
-
-    def structure_data(self):
-        """ Goes action by action and adds all collected sequence data to the sequences list
-            for each sequence added to sequences, its corresponding label is added to self.labels
-        """
-        print("NOW STRUCTURING SEQUENCE DATA")
-        sequences = []
-        for action in self.actions:
-            print(f"Adding {action} data")
-            for sequence in range(self.no_sequences):
-                window = []
-                for frame_num in range(self.sequence_length):
-                    res = np.load(os.path.join(self.DATA_PATH, action, str(sequence), "{}.npy".format(frame_num)))
-                    window.append(res)
-                sequences.append(window)
-                self.labels.append(self.label_map[action])
-
-        self.sequences = np.array(sequences) # turn the list into a numpy array
-        print("SEQUENCE DATA FULLY STRUCTURED")
         
 
     def build_neural_network_architecture(self):
