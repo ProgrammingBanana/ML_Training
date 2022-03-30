@@ -4,3 +4,5 @@ test.py
 MP_DATA/*
 structured_data.npy
 labels.npy
+Logs/*
+actions.h5
