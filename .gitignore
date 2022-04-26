@@ -6,3 +6,5 @@ structured_data.npy
 labels.npy
 Logs/*
 actions.h5
+actions_log.txt
+actions_models/*
