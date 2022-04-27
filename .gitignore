@@ -8,3 +8,4 @@ Logs/*
 actions.h5
 actions_log.txt
 actions_models/*
+testing.py
