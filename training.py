@@ -75,15 +75,16 @@ class ML_Model():
         # We can play around with the optimizer, 
         # loss has to be categorical_crossentropy because we are working with a multiclass classification model
         # the metric is optional but it allows us to track our accuracy as we train
+        # optimizer=Adam(learning_rate=0.0001), allows to update the learning rate
         print("COMPILING THE MODEL")
         self.model.compile(
-            optimizer=Adam(learning_rate=0.0001), 
+            optimizer='Adam',
             loss='categorical_crossentropy', 
             metrics=['categorical_accuracy'])
         print("TRAINING THE MODEL")
         print("In the Logs/train folder, use the command: tensorboard --logdir=.")
-        self.model.fit(self.seqs_train, self.labels_train, epochs=184, callbacks=[self.tb_callback])
-        self.model.save('actions.h5')
+        self.model.fit(self.seqs_train, self.labels_train, epochs=150, callbacks=[self.tb_callback])
+        self.model.save('./actions_models/actions_2.h5')
 
     def test(self):
         rest = self.model.predict(self.seqs_train)
@@ -97,7 +98,5 @@ class ML_Model():
 
         print(matrix)
         print(accuracy_score(ytrue, yhat))
-        print(average_precision_score(ytrue, yhat))
-        print(f1_score(ytrue, yhat, average="weighted"))
 
 ML_Model()
