@@ -1,5 +1,5 @@
 # Machine Learning Sing Language Model Training
-This project focuses on the implementing the developed Machine Learning model in an OpenCV webcam application.  For each video frame, landmark information is gathered from Mediapipe Holistic and fed to model to generate a prediction. These predictions will overlaid on screen, and printed in console.
+This project focuses on the development of the Machine Learning model that will interpret sign language
 
 ## Files:
 * training.py: has the model creation, training, and testing logic
@@ -16,4 +16,4 @@ Having an updated version of Python installed on the computer is necessary for t
 6. Run the command ```python structure_data.py``` to prepare training data and labels
 
 ## Running the application
-You are now ready to run the application.  To do so, run the command ```python training.py```.  Doing so will open being training the model and when it finishes training, it will run some tests
+You are now ready to run the application.  To do so, run the command ```python training.py```.  Doing so will open begin training the model and when it finishes training, it will run some tests
