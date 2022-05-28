@@ -34,9 +34,13 @@ class ML_Model():
         # Monitor training and accuracy as it's being trained
         self.tb_callback = TensorBoard(log_dir=self.log_dir)
 
+        # Build the model architecture and use it instantiate model
         self.model = self.build_neural_network_architecture()
+
+        # Train the model
         self.train()
 
+        # Test the model
         self.test()
         
 
@@ -49,20 +53,21 @@ class ML_Model():
 
         print("NOW BUILDING DEEP NEURAL NETWORK ARCHITECTURE")
         # instantiating the model (the sequential API)
-        # it makes easy to make the model by adding the layers
+        # it makes it easy to make the model by adding the layers
         model = Sequential()
-        # 3 sets of lstm layers
-        # 64 lstm units, return sequences=True allows the next layer to use the sequence, activation=relu (we can play around with that, we then defined the shape
+        # 5 sets of LSTM layers
+        # return sequences=True allows the next layer to use the sequence
         model.add(LSTM(64, return_sequences=True, activation='relu', input_shape=(30,1662)))
         model.add(LSTM(128, return_sequences=True, activation='relu'))
         model.add(LSTM(256, return_sequences=True, activation='relu'))
         model.add(LSTM(128, return_sequences=True, activation='relu'))
         # This is return_sequence=False because the next layers are Dense layers
-        # Andrew ings deep learning specialization 
         model.add(LSTM(64, return_sequences=False, activation='relu'))
+        # 4 sets of Dense layers
         model.add(Dense(64, activation='relu'))
         model.add(Dense(32, activation='relu'))
         model.add(Dense(16, activation='relu'))
+        # self.actions.shape[0] = 10, this is the amount of categories to be predicted by the model
         model.add(Dense(self.actions.shape[0], activation='softmax')) 
 
         print("MODEL BUILT")
@@ -72,10 +77,8 @@ class ML_Model():
         """ Compiles and trains the model
         """
 
-        # We can play around with the optimizer, 
-        # loss has to be categorical_crossentropy because we are working with a multiclass classification model
+        # Loss has to be categorical_crossentropy because we are working with a multiclass classification model
         # the metric is optional but it allows us to track our accuracy as we train
-        # optimizer=Adam(learning_rate=0.0001), allows to update the learning rate
         print("COMPILING THE MODEL")
         self.model.compile(
             optimizer='Adamax',
@@ -84,10 +87,14 @@ class ML_Model():
         print("TRAINING THE MODEL")
         print("In the Logs/train folder, use the command: tensorboard --logdir=.")
         self.model.fit(self.seqs_train, self.labels_train, epochs=160, callbacks=[self.tb_callback])
-        self.model.save('./actions_models/actions_3.h5')
+        # Saves the model
+        self.model.save('./actions_models/actions.h5')
 
     def test(self):
-        rest = self.model.predict(self.seqs_train)
+        """ Tests the model using the test partition and presents statistical analysis
+        """
+
+        rest = self.model.predict(self.seqs_test)
         print('The value predicted for the first action in the test partition is: {}'.format(self.actions[np.argmax(rest[2])]))
         print('The actual value for the first action in the test partition is: {}'.format(self.actions[np.argmax(self.labels_test[2])]))
 
