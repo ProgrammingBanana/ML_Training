@@ -1,6 +1,5 @@
 .DS_Store
 __pycache__/*
-test.py
 MP_DATA/*
 structured_data.npy
 labels.npy
@@ -8,4 +7,3 @@ Logs/*
 actions.h5
 actions_log.txt
 actions_models/*
-testing.py
