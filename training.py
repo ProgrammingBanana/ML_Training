@@ -4,7 +4,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense
 from tensorflow.keras.callbacks import TensorBoard
 from tensorflow.keras.optimizers import Adam
-from sklearn.metrics import multilabel_confusion_matrix, accuracy_score, average_precision_score, f1_score
+from sklearn.metrics import multilabel_confusion_matrix, accuracy_score
 import numpy as np
 import os
 
@@ -78,13 +78,13 @@ class ML_Model():
         # optimizer=Adam(learning_rate=0.0001), allows to update the learning rate
         print("COMPILING THE MODEL")
         self.model.compile(
-            optimizer='Adam',
+            optimizer='Adamax',
             loss='categorical_crossentropy', 
             metrics=['categorical_accuracy'])
         print("TRAINING THE MODEL")
         print("In the Logs/train folder, use the command: tensorboard --logdir=.")
-        self.model.fit(self.seqs_train, self.labels_train, epochs=150, callbacks=[self.tb_callback])
-        self.model.save('./actions_models/actions_2.h5')
+        self.model.fit(self.seqs_train, self.labels_train, epochs=160, callbacks=[self.tb_callback])
+        self.model.save('./actions_models/actions_3.h5')
 
     def test(self):
         rest = self.model.predict(self.seqs_train)
