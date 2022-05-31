@@ -3,7 +3,6 @@ from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense
 from tensorflow.keras.callbacks import TensorBoard
-from tensorflow.keras.optimizers import Adam
 from sklearn.metrics import multilabel_confusion_matrix, accuracy_score
 import numpy as np
 import os
