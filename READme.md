@@ -12,7 +12,7 @@ Having an updated version of Python installed on the computer is necessary for t
 2. Download code from the repository
 3. Run the command ```pipenv shell``` to start the virtual environment
 4. Go to the project location in the command line and run the command ```pipenv install --ignore-pipfile``` to install dependencies named in the pipfile.lock document
-5. Add recorded sign data from video capture project to this project
+5. Add recorded sign data folder ("MP_Data") from video capture project to this project
 6. Run the command ```python structure_data.py``` to prepare training data and labels
 
 ## Running the application
