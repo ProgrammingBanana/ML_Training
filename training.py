@@ -16,9 +16,9 @@ class ML_Model():
         self.actions = np.array(['ayuda', 'clase', 'donde', 'gracias', 'hola', 'necesitar', 'no_entender', 'repetir', 'n-a', 'empty'])
         
         # Opens structured_data.npy which contains all sequence keypoint data and stores it self.sequences
-        self.sequences = np.load("/Users/codingdan/Documents/University/Semestre 2 2021-2022/Tesina/codigo/ML_model training/structured_data.npy")
+        self.sequences = np.load("./structured_data.npy")
         # Opens labels.npy which contains all sequence label data and stores it in self.labels
-        self.labels = np.load("/Users/codingdan/Documents/University/Semestre 2 2021-2022/Tesina/codigo/ML_model training/labels.npy")
+        self.labels = np.load("./labels.npy")
 
         # Turn the labels into a categorization list. This turns the labels list into a list of list, where each sub-list contains a set of numbers indicating the category
         self.labels_categorized = to_categorical(self.labels).astype(int) 

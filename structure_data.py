@@ -15,7 +15,7 @@ class Structurer():
         # Constants for amount of videos, number of frames and data path
         self.NO_SEQUENCES = 200
         self.SEQUENCE_LENGTH = 30
-        self.DATA_PATH = "/Users/codingdan/Documents/University/Semestre 2 2021-2022/Tesina/codigo/ML_model training/MP_Data"
+        self.DATA_PATH = "./MP_Data"
 
         # Empty arrays for sequence data and label data
         self.sequences, self.labels = [],[]
@@ -41,9 +41,10 @@ class Structurer():
                 self.labels.append(self.label_map[action])
 
         self.sequences = np.array(sequences) # turn the list into a numpy array
+        self.labels = np.array(self.labels)
         # save both arrays to numpy files
-        np.save("/Users/codingdan/Documents/University/Semestre 2 2021-2022/Tesina/codigo/ML_model training/structured_data", self.sequences) 
-        np.save("/Users/codingdan/Documents/University/Semestre 2 2021-2022/Tesina/codigo/ML_model training/labels", self.labels)
+        np.save("./structured_data", self.sequences) 
+        np.save("./labels", self.labels)
 
         print("SEQUENCE DATA FULLY STRUCTURED")
 
